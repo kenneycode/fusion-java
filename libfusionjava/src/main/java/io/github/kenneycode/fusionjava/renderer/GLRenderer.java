@@ -60,6 +60,16 @@ public interface GLRenderer extends Renderer {
 
     /**
      *
+     * 设置渲染翻转
+     *
+     * @param flipX 水平翻转
+     * @param flipY 垂直翻转
+     *
+     */
+    void setFlip(Boolean flipX, Boolean flipY);
+
+    /**
+     *
      * 绑定输入
      *
      */
@@ -71,6 +81,13 @@ public interface GLRenderer extends Renderer {
      *
      */
     void bindOutput();
+
+    /**
+     *
+     * 绑定参数
+     *
+     */
+    void bindParameters();
 
     /**
      *

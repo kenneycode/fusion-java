@@ -30,8 +30,8 @@ import static android.opengl.GLES20.glUseProgram;
 
 public class GLProgram extends Ref {
 
-    public Shader shader = null;
-    private int program = 0;
+    Shader shader = null;
+    public int program = 0;
 
     /**
      *

@@ -13,7 +13,7 @@ import java.util.Map;
 import io.github.kenneycode.fusionjava.common.FusionGLView;
 import io.github.kenneycode.fusionjava.context.GLThread;
 import io.github.kenneycode.fusionjava.framebuffer.FrameBuffer;
-import io.github.kenneycode.fusionjava.renderer.ScreenRenderer;
+import io.github.kenneycode.fusionjava.renderer.DisplayRenderer;
 
 /**
  *
@@ -28,7 +28,7 @@ import io.github.kenneycode.fusionjava.renderer.ScreenRenderer;
 public class FusionGLTextureView extends TextureView implements FusionGLView {
 
     private GLThread glThread = null;
-    private ScreenRenderer displayRenderer = new ScreenRenderer();
+    private DisplayRenderer displayRenderer = new DisplayRenderer();
     private int surfaceWidth = 0;
     private int surfaceHeight = 0;
     private LinkedList<Runnable> pendingTasks = new LinkedList<>();
@@ -88,6 +88,7 @@ public class FusionGLTextureView extends TextureView implements FusionGLView {
      */
     @Override
     public void onInit() {
+        displayRenderer.setFlip(false, true);
         displayRenderer.init();
     }
 

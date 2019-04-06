@@ -40,6 +40,7 @@ SimpleRenderer simpleRenderer = new SimpleRenderer();
 
 // 创建RenderGraph
 RenderGraph renderGraph = new RenderGraph(simpleRenderer);
+
 // 设置RenderGraph的输出目标
 renderGraph.addOutputTarget(simpleRenderer, (FusionGLTextureView) findViewById(R.id.fusionGLTextureView));
 

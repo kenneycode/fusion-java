@@ -21,6 +21,7 @@ import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.glDisable;
 import static android.opengl.GLES20.glDrawArrays;
 import static android.opengl.GLES20.glEnable;
+import static android.opengl.GLES20.glGetAttribLocation;
 
 /**
  *
@@ -45,7 +46,7 @@ public class SimpleRenderer implements GLRenderer {
     private int vertexCount = 0;
 
     public SimpleRenderer() {
-       this(Constants.COMMON_VERTEX_SHADER_2, Constants.COMMON_FRAGMENT_SHADER_2);
+       this(Constants.SIMPLE_VERTEX_SHADER, Constants.SIMPLE_FRAGMENT_SHADER);
     }
 
     public SimpleRenderer(String vertexShader, String fragmentShader) {
@@ -71,8 +72,6 @@ public class SimpleRenderer implements GLRenderer {
      */
     @Override
     public void initParameter() {
-        setPositions(Constants.COMMON_VERTEX);
-        setTextureCoordinates(Constants.COMMON_TEXTURE_COORDINATE);
     }
 
     /**
@@ -139,6 +138,27 @@ public class SimpleRenderer implements GLRenderer {
 
     /**
      *
+     * 设置渲染翻转
+     *
+     * @param flipX 水平翻转
+     * @param flipY 垂直翻转
+     *
+     */
+    @Override
+    public void setFlip(Boolean flipX, Boolean flipY) {
+        if (!flipX && !flipY) {
+            setPositions(Constants.SIMPLE_VERTEX);
+        } else if (flipX && !flipY) {
+            setPositions(Constants.SIMPLE_VERTEX_FLIP_X);
+        } else if (!flipX && flipY) {
+            setPositions(Constants.SIMPLE_VERTEX_FLIP_Y);
+        } else {
+            setPositions(Constants.SIMPLE_VERTEX_FLIP_XY);
+        }
+    }
+
+    /**
+     *
      * 绑定输入
      *
      */
@@ -169,6 +189,32 @@ public class SimpleRenderer implements GLRenderer {
             outputFrameBuffer = FrameBufferCache.getInstance().obtainFrameBuffer(outputWidth, outputHeight);
         }
         outputFrameBuffer.bind(outputWidth, outputHeight);
+    }
+
+    /**
+     *
+     * 绑定参数
+     *
+     */
+    @Override
+    public void bindParameters() {
+        checkDefaultParameters();
+        glProgram.bindAttribute(attributes);
+        glProgram.bindUniform(uniforms);
+    }
+
+    /**
+     *
+     * 给一些预定的参数设置默认值
+     *
+     */
+    private void checkDefaultParameters() {
+        if (glGetAttribLocation(glProgram.program, Constants.POSITION_PARAM_KEY) >= 0 && findParameter(attributes, Constants.POSITION_PARAM_KEY) == null) {
+            setPositions(Constants.SIMPLE_VERTEX);
+        }
+        if (glGetAttribLocation(glProgram.program, Constants.TEXTURE_COORDINATE_PARAM_KEY) >= 0 && findParameter(attributes, Constants.TEXTURE_COORDINATE_PARAM_KEY) == null) {
+            setTextureCoordinates(Constants.SIMPLE_TEXTURE_COORDINATE);
+        }
     }
 
     /**
@@ -291,6 +337,7 @@ public class SimpleRenderer implements GLRenderer {
     public FrameBuffer render() {
         bindInput();
         bindOutput();
+        bindParameters();
         performRendering();
         unBindInput();
         return outputFrameBuffer;

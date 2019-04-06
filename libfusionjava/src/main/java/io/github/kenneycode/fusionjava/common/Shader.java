@@ -16,7 +16,7 @@ public class Shader {
     public String fragmentShader;
 
     public Shader() {
-        this(Constants.COMMON_VERTEX_SHADER, Constants.COMMON_FRAGMENT_SHADER);
+        this(Constants.SIMPLE_VERTEX_SHADER, Constants.SIMPLE_FRAGMENT_SHADER);
     }
 
     public Shader(String vertexShader, String fragmentShader) {
