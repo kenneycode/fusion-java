@@ -60,6 +60,16 @@ public interface GLRenderer extends Renderer {
 
     /**
      *
+     * 设置OES纹理参数
+     *
+     * @param key 纹理参数名
+     * @param value 纹理id
+     *
+     */
+    void setUniformOESTexture(String key, int value);
+
+    /**
+     *
      * 设置渲染翻转
      *
      * @param flipX 水平翻转

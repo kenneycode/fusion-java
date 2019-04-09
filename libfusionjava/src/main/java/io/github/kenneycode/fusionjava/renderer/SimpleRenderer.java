@@ -11,6 +11,7 @@ import io.github.kenneycode.fusionjava.common.Shader;
 import io.github.kenneycode.fusionjava.framebuffer.FrameBuffer;
 import io.github.kenneycode.fusionjava.framebuffer.FrameBufferCache;
 import io.github.kenneycode.fusionjava.parameter.FloatArrayParameter;
+import io.github.kenneycode.fusionjava.parameter.OESTextureParameter;
 import io.github.kenneycode.fusionjava.parameter.Parameter;
 import io.github.kenneycode.fusionjava.parameter.Texture2DParameter;
 import io.github.kenneycode.fusionjava.program.GLProgram;
@@ -131,6 +132,24 @@ public class SimpleRenderer implements GLRenderer {
         Parameter parameter = findParameter(uniforms, key);
         if (parameter == null) {
             uniforms.add(new Texture2DParameter(key, value));
+        } else {
+            parameter.updateValue(value);
+        }
+    }
+
+    /**
+     *
+     * 设置OES纹理参数
+     *
+     * @param key 纹理参数名
+     * @param value 纹理id
+     *
+     */
+    @Override
+    public void setUniformOESTexture(String key, int value) {
+        Parameter parameter = findParameter(uniforms, key);
+        if (parameter == null) {
+            uniforms.add(new OESTextureParameter(key, value));
         } else {
             parameter.updateValue(value);
         }
